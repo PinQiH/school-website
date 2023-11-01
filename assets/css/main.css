@@ -252,9 +252,8 @@ q:after {
 }
 
 .detail p {
-    font-size: 20px;
+    font-size: 15px;
     font-family: 微軟正黑體;
-    font-weight: bold;
     color: black;
     margin: 10px;
     text-align: left;
@@ -370,18 +369,26 @@ q:after {
     text-align: center;
 }
 
-.details table {
-    text-align: center;
+.detail table {
+    text-align: left;
+    width: 100%;
+}
+
+.detail table th.year {
+    width: 20%;
+}
+
+.detail table th.thing,
+.detail table td.thing {
+    width: 80%;
 }
 
 .detail {
     font-size: 18px;
     font-family: 微軟正黑體;
-    margin: 30px;
     word-wrap: break-word;
     margin-left: 200px;
     text-align: left;
-
 }
 
 .detail ul {
@@ -415,6 +422,11 @@ q:after {
 .phohograph img {
     width: 1000px;
     height: auto;
+}
+
+.phohograph-3 img {
+    width: 250px;
+    height: 250px;
 }
 
 .phohograph-4 img {
@@ -482,11 +494,11 @@ q:after {
 
 .bdtext {
     position: relative;
+    text-align: left;
 }
 
 .bdtext ul {
     list-style-type: disc;
-    /* 使用小圆点作为项目标记 */
     margin-left: 60px;
     margin-top: 30px;
 }
@@ -494,15 +506,12 @@ q:after {
 .bdtext li {
     font-size: 18px;
     color: #333;
-    /* 设置文本颜色 */
     margin-bottom: 30px;
-    /* 设置列表项之间的间距 */
     text-align: left;
 }
 
 .bdtext h1 {
     width: 300px;
-    /* 設置寬度為200px，可以根據需要調整值 */
     text-align: center;
     margin-left: 40px;
     line-height: 30px;
@@ -515,6 +524,9 @@ q:after {
 .bdtext h2 {
     font-size: 20px;
     margin-left: 85px;
+    margin-top: -10px;
+    margin-bottom: 20px;
+    line-height: 20px;
 }
 
 .bdtext span {
@@ -720,6 +732,18 @@ table {
 
 #column3:hover {
     color: black;
+}
+
+#year {
+    width: 5%;
+}
+
+#thing {
+    width: 95%;
+}
+
+#text {
+    text-align: center;
 }
 
 .banner {
