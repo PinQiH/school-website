@@ -623,7 +623,7 @@ table {
     flex: 1;
     padding: 10px;
     border-collapse: collapse;
-    width: 600px;
+    width: 800px;
 }
 
 .left-table p,
@@ -634,6 +634,7 @@ table {
     color: black;
     margin: 10px;
     text-align: left;
+    width: 800px;
 }
 
 .left-table th,
@@ -642,7 +643,7 @@ table {
 .right-table td {
     padding: 8px;
     text-align: left;
-    border-bottom: 1px solid #DDD;
+    border-bottom: 3px solid #DDD;
 }
 
 .left-table tr:hover,
@@ -752,6 +753,10 @@ table {
 
 #text {
     text-align: center;
+}
+
+#title {
+    width: 85%;
 }
 
 .banner {
