@@ -424,6 +424,14 @@ q:after {
     height: auto;
 }
 
+.phohograph-2 img {
+    margin-left: 35px;
+    margin-top: 40px;
+    width: 650px;
+    /* 設定您想要的寬度值 */
+    height: 450px;
+}
+
 .phohograph-3 img {
     width: 250px;
     height: 250px;
