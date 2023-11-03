@@ -157,7 +157,7 @@ $link = require('config.php');
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="food.html">美食推薦</a>
+                            <a class="nav-link active" href="food.php">美食推薦</a>
                         </li>
                     </div>
                 </ul>
@@ -204,13 +204,13 @@ $link = require('config.php');
 
                                 <?php
                                 // 執行資料庫查詢
-                                $sql = "SELECT publish_date, title FROM `announcements` ORDER BY publish_date DESC LIMIT 5";
+                                $sql = "SELECT id, publish_date, title FROM `announcements` ORDER BY publish_date DESC LIMIT 5";
                                 $result = mysqli_query($link, $sql);
                                 $row_count = mysqli_num_rows($result);
 
                                 for ($i = 0; $i < $row_count; $i++) {
                                     $record = mysqli_fetch_row($result);
-                                    echo "<tr><td>" . $record[0] . "</td><td>" . $record[1] . "</td></tr>";
+                                    echo "<tr onclick='window.location=\"announcements.php?announcement_id={$record[0]}\"'><td>" . $record[1] . "</td><td>" . $record[2] . "</td></tr>";
                                 }
                                 ?>
                             </table>
@@ -234,13 +234,13 @@ $link = require('config.php');
 
                                 <?php
                                 // 執行資料庫查詢
-                                $sql = "SELECT publish_date, title FROM `announcements` WHERE category = '招生資訊' ORDER BY publish_date DESC LIMIT 5";
+                                $sql = "SELECT id, publish_date, title FROM `announcements` WHERE category = '招生資訊' ORDER BY publish_date DESC LIMIT 5";
                                 $result = mysqli_query($link, $sql);
                                 $row_count = mysqli_num_rows($result);
 
                                 for ($i = 0; $i < $row_count; $i++) {
                                     $record = mysqli_fetch_row($result);
-                                    echo "<tr><td>" . $record[0] . "</td><td>" . $record[1] . "</td></tr>";
+                                    echo "<tr onclick='window.location=\"announcements.php?announcement_id={$record[0]}\"'><td>" . $record[1] . "</td><td>" . $record[2] . ".</td></tr>";
                                 }
                                 ?>
                             </table>

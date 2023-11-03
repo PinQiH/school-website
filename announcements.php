@@ -1,3 +1,33 @@
+<?php
+// 載入配置文件
+$link = require('config.php');
+
+// 獲取特定公告的內容和相關附件
+if (isset($_GET['announcement_id'])) {
+    $announcement_id = $_GET['announcement_id'];
+    // 檢索公告的資料
+    $announcement_query = "SELECT * FROM announcements WHERE id = $announcement_id";
+    $announcement_result = mysqli_query($link, $announcement_query);
+
+    if ($announcement_result && $announcement_result->num_rows > 0) {
+        $announcement_row = $announcement_result->fetch_assoc();
+        $title = $announcement_row['title'];
+        $publish_date = $announcement_row['publish_date'];
+        $expiration_date = $announcement_row['expiration_date'];
+        $issuing_unit = $announcement_row['issuing_unit'];
+        $category = $announcement_row['category'];
+        $content = $announcement_row['content'];
+        $related_url = $announcement_row['related_url'];
+
+        // 檢索相關附件
+        $attachments_query = "SELECT * FROM attachments WHERE announcement_id = $announcement_id";
+        $attachments_result = mysqli_query($link, $attachments_query);
+    } else {
+        echo "找不到指定的公告。";
+    }
+}
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,7 +53,21 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
     <script src="./assets/js/nav.js"></script>
-    <title>師資簡介</title>
+    <title>公告內容</title>
+
+    <style>
+        .announcement {
+            text-align: left;
+            font-size: 20px;
+            margin: 20px;
+            line-height: 2;
+        }
+
+        .bold {
+            font-weight: bold;
+            display: inline;
+        }
+    </style>
 </head>
 
 <body>
@@ -161,21 +205,33 @@
         <div class="href">
             <ol>
                 <li class="a1"><a href="index.php">首頁</a></li>
-                <li class="a2"><a href="faculty.html">師資簡介</a></li>
+                <li class="a2"><a href="news.html">最新消息</a></li>
+                <li class="a3"><a href="#">公告內容</a></li>
             </ol>
         </div>
 
         <div class="main">
-            <div class="title">
-                <h2>師資簡介</h2>
-            </div>
+            <p><?php echo $title; ?></p>
+            <div class="announcement">
+                <h1><div class="bold">發佈日期：</div><?php echo $publish_date; ?></h1>
+                <h1><div class="bold">發佈單位：</div><?php echo $issuing_unit; ?></h1>
+                <h1><div class="bold">分類：</div><?php echo $category; ?></h1>
+                <h1><div class="bold">內容：</div></h1>
+                <h1><?php echo $content; ?></h1>
 
-            <div class="detail">
-                <ul>
-                    <li><a class="dropdown-item" href="teac.html">專任教師</a></li>
-                    <li><a class="dropdown-item" href="teac2.html">兼任教師</a></li>
-                    <li><a class="dropdown-item" href="teac3.html">退休教師</a></li>
-                </ul>
+                <?php
+                // 顯示相關附件
+                if ($attachments_result && $attachments_result->num_rows > 0) {
+                    echo "<h1><div class='bold'>相關附件：</div></h1>";
+                    while ($attachment_row = $attachments_result->fetch_assoc()) {
+                        $attachment_title = $attachment_row['title'];
+                        $file_path = $attachment_row['file_path'];
+                        echo "<a href='$file_path' target='_blank'>$attachment_title</a><br>";
+                    }
+                } else {
+                    echo "<h1><div class='bold'>相關附件：</div>無</h1>";
+                }
+                ?>
             </div>
         </div>
 

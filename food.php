@@ -1,3 +1,24 @@
+<?php
+// 載入配置文件
+$link = require('config.php');
+
+// 設定每頁最多顯示的資料數
+$items_per_page = 4;
+
+// 獲取當前頁碼，如果未指定，默認為第1頁
+$page = isset($_GET['page']) ? intval($_GET['page']) : 1;
+
+// 查詢總餐廳數
+$total_restaurants = mysqli_query($link, "SELECT COUNT(*) as total FROM restaurants");
+$total = mysqli_fetch_assoc($total_restaurants)['total'];
+
+// 計算總頁數
+$total_pages = ceil($total / $items_per_page);
+
+// 計算每頁的起始索引
+$offset = ($page - 1) * $items_per_page;
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -153,7 +174,7 @@
                             </div>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link active" href="food.html">美食推薦</a>
+                            <a class="nav-link active" href="food.php">美食推薦</a>
                         </li>
                     </div>
                 </ul>
@@ -163,129 +184,73 @@
         <div class="href">
             <ol>
                 <li class="a1"><a href="index.php">首頁</a></li>
-                <li class="a3"><a href="food.html">美食推薦</a></li>
+                <li class="a3"><a href="food.php">美食推薦</a></li>
             </ol>
         </div>
 
         <div class="main">
             <p>美食推薦</p>
-            <div class="content-wrapper">
-                <div class="content-container">
-                    <div class="phohograph-5">
-                        <img src="./assets/images/恩家食堂.jpg" alt="恩家食堂" />
-                    </div>
 
-                    <div class="bdtext-4">
-                        <h1>恩家食堂</h1><br>
-                        <a href="https://www.google.com/maps?q=恩家食堂">
-                            <i class="material-icons">place</i>
-                            <span> 台北市內湖區環山路一段92號</span><br><br>
-                        </a>
-                        <i class="material-icons">call</i>
-                        <span> (02) 2797-0211</span><br><br>
-                        <i class="material-icons">access_time</i>
-                        <span> 週一至週日:8:00-13:00</span><br><br>
-                        <i class="material-icons">list</i>
-                        <span> 早餐與早午餐</span><br><br>
-                        <i class="material-icons">thumb_up</i>
-                        <span> 4.1(64則評論)</span>
-                    </div>
-                </div>
+            <?php
+            $sql = "SELECT * FROM restaurants LIMIT $offset, $items_per_page";
+            $result = mysqli_query($link, $sql);
 
-                <div class="content-container">
-                    <div class="phohograph-5">
-                        <img src="./assets/images/自助餐.jpg" alt="自助餐" />
-                    </div>
+            // 計數器，用於跟蹤每兩筆資料
+            $count = 0;
 
-                    <div class="bdtext-4">
-                        <h1> 泛美台式自助餐</h1><br>
-                        <a href="https://www.google.com/maps?q=泛美台式自助餐">
-                            <i class="material-icons">place</i>
-                            <span> 台北市內湖區文湖街71號</span><br><br>
-                        </a>
-                        <i class="material-icons">call</i>
-                        <span> (02)2657-9776</span><br><br>
-                        <i class="material-icons">access_time</i>
-                        <span> 週一至週日:10:00-20:00</span><br><br>
-                        <i class="material-icons">list</i>
-                        <span> 自助餐</span><br><br>
-                        <i class="material-icons">thumb_up</i>
-                        <span> 3.5(519則評論)</span>
-                    </div>
-                </div>
-            </div>
+            // 遍歷結果集，生成 HTML
+            while ($row = mysqli_fetch_assoc($result)) {
+                // 如果計數器為0，表示新的一組，則開始新的 content-wrapper
+                if ($count % 2 == 0) {
+                    echo '<div class="content-wrapper">';
+                }
 
-            <div class="content-wrapper">
-                <div class="content-container">
-                    <div class="phohograph-5">
-                        <img src="./assets/images/家家家.jpg" alt="義大利麵" />
-                    </div>
+                echo '<div class="content-container">';
+                echo '<div class="phohograph-5">';
+                echo '<img src="' . $row['image_path'] . '" alt="' . $row['name'] . '" />';
+                echo '</div>';
+                echo '<div class="bdtext-4">';
+                echo '<h1>' . $row['name'] . '</h1><br>';
+                echo '<a href="https://www.google.com/maps?q=' . $row['name'] . '">';
+                echo '<i class="material-icons">place</i>';
+                echo '<span>' . $row['address'] . '</span><br><br>';
+                echo '</a>';
+                echo '<i class="material-icons">call</i>';
+                echo '<span>' . $row['phone'] . '</span><br><br>';
+                echo '<i class="material-icons">access_time</i>';
+                echo '<span>' . $row['hours'] . '</span><br><br>';
+                echo '<i class="material-icons">list</i>';
+                echo '<span>' . $row['cuisine'] . '</span><br><br>';
+                echo '<i class="material-icons">thumb_up</i>';
+                echo '<span>' . $row['rating'] . '</span>';
+                echo '</div>';
+                echo '</div>';
 
-                    <div class="bdtext-4">
-                        <h1>佳佳義大利麵</h1><br>
-                        <a href="https://www.google.com/maps?q=佳佳義大利麵">
-                            <i class="material-icons">place</i>
-                            <span> 台北市內湖區文湖街67號</span><br><br>
-                        </a>
-                        <i class="material-icons">call</i>
-                        <span>(02)2659-2707 </span><br><br>
-                        <i class="material-icons">access_time</i>
-                        <span>週一至週六:11:00-14:00,17:00-20:00 </span><br><br>
-                        <i class="material-icons">list</i>
-                        <span>義大利麵</span><br><br>
-                        <i class="material-icons">thumb_up</i>
-                        <span>4.6(252則評論)</span>
-                    </div>
-                </div>
+                // 如果計數器為1，表示一組結束，則關閉 content-wrapper
+                if ($count % 2 == 1) {
+                    echo '</div>';
+                }
 
-                <div class="content-container">
-                    <div class="phohograph-5">
-                        <img src="./assets/images/三顧茅廬盧.jpg" alt="三顧茅廬" />
-                    </div>
+                // 增加計數器
+                $count++;
+            }
 
-                    <div class="bdtext-4">
-                        <h1>三顧茅廬-內湖文湖店</h1><br>
-                        <a href="https://www.google.com/maps?q=三顧茅廬-內湖文湖店">
-                            <i class="material-icons">place</i>
-                            <span> 台北市內湖區文湖街73號</span><br><br>
-                        </a>
-                        <i class="material-icons">call</i>
-                        <span>(02)2797-7107 </span><br><br>
-                        <i class="material-icons">access_time</i>
-                        <span>週一至週五:11:00-13:30,16:30-23:00 </span><br><br>
-                        <i class="material-icons">access_time</i>
-                        <span>週日:16:00-23:00 </span><br><br>
-                        <i class="material-icons">list</i>
-                        <span>滷味</span><br><br>
-                        <i class="material-icons">thumb_up</i>
-                        <span>4.8(932則評論)</span>
-                    </div>
-                </div>
-            </div>
+            // 如果最後一組僅有一筆資料，請關閉 content-wrapper
+            if ($count % 2 == 1) {
+                echo '</div>';
+            }
 
-            <div class="content-wrapper">
-                <div class="content-container">
-                    <div class="phohograph-5">
-                        <img src="./assets/images/豬窩窩窩.jpg" alt="豬窩窩" />
-                    </div>
-
-                    <div class="bdtext-4">
-                        <h1>豬窩窩咖啡廚房</h1><br>
-                        <a href="https://www.google.com/maps?q=豬窩窩咖啡廚房">
-                            <i class="material-icons">place</i>
-                            <span> 台北市內湖區文湖街65號</span><br><br>
-                        </a>
-                        <i class="material-icons">call</i>
-                        <span> (02)2658-8268</span><br><br>
-                        <i class="material-icons">access_time</i>
-                        <span>週一周二,周四至週日:6:30-14:30</span><br><br>
-                        <i class="material-icons">list</i>
-                        <span>早午餐、焗飯、義大利麵</span><br><br>
-                        <i class="material-icons">thumb_up</i>
-                        <span>4.4(87則評論)</span>
-                    </div>
-                </div>
-            </div>
+            // 顯示頁碼
+            echo '<div class="page">';
+            for ($i = 1; $i <= $total_pages; $i++) {
+                if ($i == $page) {
+                    echo '<span>' . $i . '</span>';
+                } else {
+                    echo '<a href="?page=' . $i . '">' . $i . '</a>';
+                }
+            }
+            echo '</div>';
+            ?>
         </div>
 
         <div class="footer">

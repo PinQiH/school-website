@@ -731,6 +731,13 @@ table {
     table-layout: fixed;
 }
 
+/* 分頁容器 */
+.page {
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
 #column1:hover {
     color: black;
 }
