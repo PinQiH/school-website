@@ -5,15 +5,13 @@ $password = "takming"; // MySQL 密碼
 $database = "tbtodo"; // 你的資料庫名稱
 
 // 建立與 MySQL 資料庫的連線
-$conn = new mysqli($servername, $username, $password, $database);
+$link = mysqli_connect($servername, $username, $password, $database);
 
 // 檢查連線是否成功
-if ($conn->connect_error) {
-    die("連線失敗: " . $conn->connect_error);
+if($link === false){
+    die("ERROR: Could not connect. " . mysqli_connect_error());
 }
-
-// 在此可以執行資料庫查詢或其他操作
-
-// 關閉資料庫連線
-$conn->close();
+else{
+    return $link;
+}
 ?>

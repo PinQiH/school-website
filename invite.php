@@ -1,3 +1,8 @@
+<?php
+// 載入配置文件
+$link = require('config.php');
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -30,7 +35,7 @@
     <div class="wrap">
         <div class="header">
             <div class="fontpage">
-                <a href="index.html">
+                <a href="index.php">
                     <img src="./assets/images/A007校徽A款.png" alt="" class="logo">
                     <h2> 德明財經科技大學|資訊管理學系</h2>
                     <h4>Department of Management Information System</h4>
@@ -57,10 +62,10 @@
                                 最新消息
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
-                                <a class="dropdown-item" href="gene.html">一般公告</a>
-                                <a class="dropdown-item" href="stud.html">招生公告</a>
-                                <a class="dropdown-item" href="invite.html">徵才資訊</a>
-                                <a class="dropdown-item" href="glory.html">榮譽榜</a>
+                                <a class="dropdown-item" href="gene.php">一般公告</a>
+                                <a class="dropdown-item" href="stud.php">招生公告</a>
+                                <a class="dropdown-item" href="invite.php">徵才資訊</a>
+                                <a class="dropdown-item" href="glory.php">榮譽榜</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown">
@@ -160,15 +165,43 @@
 
         <div class="href">
             <ol>
-                <li class="a1"><a href="index.html">首頁</a></li>
+                <li class="a1"><a href="index.php">首頁</a></li>
                 <li class="a2"><a href="news.html">最新消息</a></li>
-                <li class="a3"><a href="invite.html">徵才資訊</a></li>
+                <li class="a3"><a href="invite.php">徵才資訊</a></li>
             </ol>
         </div>
 
         <div class="main">
             <div class="photo">
                 <img src="./assets/images/徵才暗四.jpg" class="d-block w-100 " alt="..." style="height: 450px">
+            </div><br><br>
+
+            <div class="content">
+                <div class="container">
+                    <div class="table-responsive">
+                        <table class="table custom-table">
+                            <thead>
+                                <tr>
+                                    <th class="date">日期</th>
+                                    <th class="title">標題</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                // 執行資料庫查詢
+                                $sql = "SELECT publish_date, title FROM `announcements` WHERE category = '徵才資訊' ORDER BY publish_date";
+                                $result = mysqli_query($link, $sql);
+                                $row_count = mysqli_num_rows($result);
+
+                                for ($i = 0; $i < $row_count; $i++) {
+                                    $record = mysqli_fetch_row($result);
+                                    echo "<tr><td>" . $record[0] . "</td><td>" . $record[1] . "</td></tr>";
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
             </div>
         </div>
 

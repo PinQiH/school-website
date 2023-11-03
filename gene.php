@@ -1,3 +1,8 @@
+<?php
+// 載入配置文件
+$link = require('config.php');
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -23,15 +28,14 @@
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
     <script src="./assets/js/nav.js"></script>
-    <title>首頁</title>
+    <title>一般公告</title>
 </head>
-
 
 <body>
     <div class="wrap">
         <div class="header">
             <div class="fontpage">
-                <a href="index.html">
+                <a href="index.php">
                     <img src="./assets/images/A007校徽A款.png" alt="" class="logo">
                     <h2> 德明財經科技大學|資訊管理學系</h2>
                     <h4>Department of Management Information System</h4>
@@ -58,10 +62,10 @@
                                 最新消息
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink2">
-                                <a class="dropdown-item" href="gene.html">一般公告</a>
-                                <a class="dropdown-item" href="stud.html">招生公告</a>
-                                <a class="dropdown-item" href="invite.html">徵才資訊</a>
-                                <a class="dropdown-item" href="glory.html">榮譽榜</a>
+                                <a class="dropdown-item" href="gene.php">一般公告</a>
+                                <a class="dropdown-item" href="stud.php">招生公告</a>
+                                <a class="dropdown-item" href="invite.php">徵才資訊</a>
+                                <a class="dropdown-item" href="glory.php">榮譽榜</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown">
@@ -159,99 +163,43 @@
             </div>
         </div>
 
-        <div class="banner">
-            <div id="carouselExampleFade" class="carousel slide carousel-fade" data-ride="carousel">
-                <div class="carousel-inner">
-                    <div class="carousel-item active">
-                        <img src="./assets/images/封面暗.jpg" class="d-block w-100 " alt="..." style="height: 450px">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="./assets/images/德明.png" class="d-block w-100" alt="..." style="height: 450px">
-                    </div>
-                    <div class="carousel-item">
-                        <img src="./assets/images/德明實.jpg" class="d-block w-100" alt="..." style="height: 450px">
-                    </div>
-                </div>
-                <a class="carousel-control-prev" href="#carouselExampleFade" role="button" data-slide="prev">
-                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Previous</span>
-                </a>
-                <a class="carousel-control-next" href="#carouselExampleFade" role="button" data-slide="next">
-                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                    <span class="sr-only">Next</span>
-                </a>
-            </div>
+        <div class="href">
+            <ol>
+                <li class="a1"><a href="index.php">首頁</a></li>
+                <li class="a2"><a href="news.html">最新消息</a></li>
+                <li class="a3"><a href="gene.php">一般公告</a></li>
+            </ol>
         </div>
 
         <div class="main">
-            <div class="index">
-                <div class="content-wrapper-4">
-                    <div class="content-container">
-                        <div class="left-table">
-                            <!-- 放最新消息的表格 -->
-                            <p>最新消息</p>
+            <div class="photo">
+                <img src="./assets/images/一般亮四.jpg" class="d-block w-100 " alt="..." style="height: 450px">
+            </div><br><br>
 
-                            <table>
+            <div class="content">
+                <div class="container">
+                    <div class="table-responsive">
+                        <table class="table custom-table">
+                            <thead>
                                 <tr>
-                                    <th>日期</th>
-                                    <th id="title">標題</th>
+                                    <th class="date">日期</th>
+                                    <th class="title">標題</th>
                                 </tr>
-                                <tr>
-                                    <td>2023-10-13</td>
-                                    <td>113學年度大學特殊選才招生簡章</td>
-                                </tr>
-                                <tr>
-                                    <td>2023-10-13</td>
-                                    <td>113學年度大學特殊選才招生簡章</td>
-                                </tr>
-                                <tr>
-                                    <td>2023-10-13</td>
-                                    <td>113學年度大學特殊選才招生簡章</td>
-                                </tr>
-                                <tr>
-                                    <td>2023-10-13</td>
-                                    <td>113學年度大學特殊選才招生簡章</td>
-                                </tr>
-                            </table>
+                            </thead>
+                            <tbody>
+                                <?php
+                                // 執行資料庫查詢
+                                $sql = "SELECT publish_date, title FROM `announcements` ORDER BY publish_date";
+                                $result = mysqli_query($link, $sql);
+                                $row_count = mysqli_num_rows($result);
 
-                            <a href="news.html">
-                                <button type="button" class="btn btn-outline-secondary">查看更多</button>
-                            </a>
-                        </div>
-                    </div>
-
-                    <div class="content-container">
-                        <div class="right-table">
-                            <!-- 放招生資訊的表格 -->
-                            <p>招生資訊</p>
-
-                            <table>
-                                <tr>
-                                    <th>日期</th>
-                                    <th id="title">標題</th>
-                                </tr>
-                                <tr>
-                                    <td>2023-10-13</td>
-                                    <td>113學年度大學特殊選才招生簡章</td>
-                                </tr>
-                                <tr>
-                                    <td>2023-10-13</td>
-                                    <td>113學年度大學特殊選才招生簡章</td>
-                                </tr>
-                                <tr>
-                                    <td>2023-10-13</td>
-                                    <td>113學年度大學特殊選才招生簡章</td>
-                                </tr>
-                                <tr>
-                                    <td>2023-10-13</td>
-                                    <td>113學年度大學特殊選才招生簡章</td>
-                                </tr>
-                            </table>
-
-                            <a href="admissions.html">
-                                <button type="button" class="btn btn-outline-secondary">查看更多</button>
-                            </a>
-                        </div>
+                                for ($i = 0; $i < $row_count; $i++) {
+                                    $record = mysqli_fetch_row($result);
+                                    echo "<tr><td>" . $record[0] . "</td><td>" . $record[1] . "</td></tr>";
+                                }
+                                ?>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -270,10 +218,12 @@
                         <p>Fax: (02)8751-5018</p>
                         <p>地址:台北市內湖區環山路一段56號</p>
                     </td>
-                    <td><iframe
+                    <td>
+                        <iframe
                             src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14453.80864966052!2d121.5654923!3d25.0865509!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442ac6bd0b368c1%3A0xfa88e4f9afa56d76!2z5b635piO6LKh57aT56eR5oqA5aSn5a24!5e0!3m2!1szh-TW!2stw!4v1695189154495!5m2!1szh-TW!2stw"
                             width="200" height="200" style="border:0;" allowfullscreen="" loading="lazy"
-                            referrerpolicy="no-referrer-when-downgrade"></iframe></td>
+                            referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </td>
                 </tr>
             </table>
         </div>
