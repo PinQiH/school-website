@@ -47,6 +47,51 @@ $offset = ($page - 1) * $items_per_page;
         src="https: //cdnjs.cloudflare.com/ajax/libs/simplePagination.js/1.6/jquery.simplePagination.min.js"></script>
     <script src="./assets/js/nav.js"></script>
     <title>美食推薦</title>
+
+    <style>
+        /* 分頁容器 */
+        .pagination {
+        display: flex;
+        justify-content: center;
+        margin-top: 20px;
+        }
+
+        /* 分頁連結 */
+        .pagination a {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 30px;
+        height: 30px;
+        margin: 0 5px;
+        border: 1px solid #333;
+        text-decoration: none;
+        color: #333;
+        border-radius: 50%;
+        transition: background-color 0.3s, color 0.3s, transform 0.3s;
+        }
+
+        /* 活動頁碼 */
+        .pagination span {
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        width: 30px;
+        height: 30px;
+        margin: 0 5px;
+        border: 1px solid #333;
+        background-color: #333;
+        color: #fff;
+        border-radius: 50%;
+        }
+
+        /* 頁碼連結的悬停樣式 */
+        .pagination a:hover {
+        background-color: #baa6c9;
+        color: #fff;
+        transform: scale(1.2);
+        }
+    </style>
 </head>
 
 <body>
@@ -131,9 +176,9 @@ $offset = ($page - 1) * $items_per_page;
                                 師資簡介
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink5">
-                                <a class="dropdown-item" href="teac.html">專任教師</a>
-                                <a class="dropdown-item" href="teac2.html">兼任教師</a>
-                                <a class="dropdown-item" href="teac3.html">退休教師</a>
+                                <a class="dropdown-item" href="teac.php">專任教師</a>
+                                <a class="dropdown-item" href="teac2.php">兼任教師</a>
+                                <a class="dropdown-item" href="teac3.php">退休教師</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown">
@@ -241,7 +286,7 @@ $offset = ($page - 1) * $items_per_page;
             }
 
             // 顯示頁碼
-            echo '<div class="page">';
+            echo '<div class="pagination">';
             for ($i = 1; $i <= $total_pages; $i++) {
                 if ($i == $page) {
                     echo '<span>' . $i . '</span>';

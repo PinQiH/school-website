@@ -41,3 +41,4 @@ Schedule:
 5. invite加後端
 6. food加後端、分頁功能
 7. 公告內容完成
+8. teac加後端

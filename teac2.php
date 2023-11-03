@@ -1,3 +1,8 @@
+<?php
+// 載入配置文件
+$link = require('config.php');
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -9,6 +14,7 @@
         integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="./assets/css/main.css">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -22,8 +28,11 @@
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script
+        src="https: //cdnjs.cloudflare.com/ajax/libs/simplePagination.js/1.6/jquery.simplePagination.min.js"></script>
     <script src="./assets/js/nav.js"></script>
-    <title>歷史沿革</title>
+    <title>兼任教師</title>
 </head>
 
 <body>
@@ -161,86 +170,93 @@
         <div class="href">
             <ol>
                 <li class="a1"><a href="index.php">首頁</a></li>
-                <li class="a2"><a href="about.html">關於本系</a></li>
-                <li class="a3"><a href="hist.html">歷史沿革</a></li>
+                <li class="a2"><a href="faculty.html">師資簡介</a></li>
+                <li class="a3"><a href="teac2.php">兼任教師</a></li>
             </ol>
         </div>
 
         <div class="main">
-            <div class="title">
-                <h2>歷史沿革</h2><br><br>
-            </div>
+            <p>兼任教師</p>
 
-            <div class="detail">
-                <h6 id="text">德明財經科技大學資訊管理學系創立於民國七十八年。</h6>
-                <h6 id="text">本系目前設有學士班兩班，並於民國九十九成立碩士班招收第一屆研究生。</h6><br><br>
+            <?php
+            $sql = "SELECT * FROM teachers WHERE type = '兼任教師'";
+            $result = mysqli_query($link, $sql);
 
-                <table class="table" cellpadding="0" cellspacing="0">
-                    <tbody>
-                        <tr class="row header">
-                            <th class="cell" id="year">學年度</th>
-                            <th class="cell" id="thing">重要事件</th>
-                        </tr>
-                        <tr class="row">
-                            <td class="cell">78</td>
-                            <td class="cell">本系前身「電子資料處理科」成立，初期招收日間部五專部一班</td>
-                        </tr>
-                        <tr class="row">
-                            <td class="cell">83</td>
-                            <td class="cell">改名為資訊管理科</td>
-                        </tr>
-                        <tr class="row">
-                            <td class="cell">89</td>
-                            <td class="cell">本校升格為德明技術學院，開始成立大學日四技學制</td>
-                        </tr>
-                        <tr class="row">
-                            <td class="cell">91</td>
-                            <td class="cell">更改為資訊管理系並附設專科部</td>
-                        </tr>
-                        <tr class="row">
-                            <td class="cell">96</td>
-                            <td class="cell">改名為「德明財經科技大學」，開始轉型準備朝全大學學制邁進</td>
-                        </tr>
-                        <tr class="row">
-                            <td class="cell">97</td>
-                            <td class="cell">成立資訊科技與管理研究所</td>
-                        </tr>
-                        <tr class="row">
-                            <td class="cell">99</td>
-                            <td class="cell">成立資訊科技與管理研究所在職專班</td>
-                        </tr>
-                        <tr class="row">
-                            <td class="cell">101</td>
-                            <td class="cell">更改為資訊管理系碩士班、資訊管理系碩士在職專班。目前本系學制為日四技</td>
-                        </tr>
-                    </tbody>
-                </table>
-            </div>
+            // 計數器，用於跟蹤每兩筆資料
+            $count = 0;
+
+            // 遍歷結果集，生成 HTML
+            while ($row = mysqli_fetch_assoc($result)) {
+                // 如果計數器為0，表示新的一組，則開始新的 content-wrapper
+                if ($count % 2 == 0) {
+                    echo '<div class="content-wrapper">';
+                }
+
+                echo '<div class="content-container">';
+                echo '<div class="phohograph-3">';
+                echo '<img src="' . $row['image_path'] . '" alt="' . $row['name'] . '" />';
+                echo '</div>';
+                echo '<div class="bdtext">';
+                echo '<h1>' . $row['name'] . '</h1><br>';
+                echo '<i class="material-icons" style="font-size:36px">account_box</i>';
+                echo '<span>'. $row['title'] . '</span><br><br>';
+                echo '<i class="material-icons" style="font-size:36px">school</i>';
+                echo '<span>'. $row['school'] . '</span><br><br>';
+                echo '<i class="material-icons" style="font-size:36px">thumb_up</i>';
+                echo '<span>' . $row['research_interests'] . '</span><br><br>';
+                echo '<i class="material-icons" style="font-size:36px">email</i>';
+                echo '<a href="mailto:' . $row['email'] . '">';
+                echo '<span>' . $row['email'] . '</span><br><br>';
+                echo '</a>';
+                echo '<i class="material-icons" style="font-size:36px">business_center</i>';
+                echo '<span>' . $row['office'] . '</span><br><br>';
+                echo '<i class="material-icons" style="font-size:36px">call</i>';
+                echo '<span>' . $row['phone'] . '</span><br><br>';
+                echo '<i class="material-icons" style="font-size:36px">public</i>';
+                echo '<a href="' . $row['website'] . '">';
+                echo '<span>' . $row['website'] . '</span>';
+                echo '</a>';
+                echo '</div>';
+                echo '</div>';
+
+                // 如果計數器為1，表示一組結束，則關閉 content-wrapper
+                if ($count % 2 == 1) {
+                    echo '</div>';
+                }
+
+                // 增加計數器
+                $count++;
+            }
+
+            // 如果最後一組僅有一筆資料，請關閉 content-wrapper
+            if ($count % 2 == 1) {
+                echo '</div>';
+            }
+            ?>
         </div>
-    </div>
 
-    <div class="footer">
-        <table>
-            <tr>
-                <td class="ftitle">聯絡資訊</td>
-                <td class="ftitle">學校地理位置</td>
-            </tr>
-            <tr>
-                <td>
-                    <p>Tel:02-26585801轉2761(大學部)</p>
-                    <p>Tel: (02)-2658-5801轉2120-2125、2102-2103</p>
-                    <p>Fax: (02)8751-5018</p>
-                    <p>地址:台北市內湖區環山路一段56號</p>
-                </td>
-                <td>
-                    <iframe
-                        src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14453.80864966052!2d121.5654923!3d25.0865509!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442ac6bd0b368c1%3A0xfa88e4f9afa56d76!2z5b635piO6LKh57aT56eR5oqA5aSn5a24!5e0!3m2!1szh-TW!2stw!4v1695189154495!5m2!1szh-TW!2stw"
-                        width="200" height="200" style="border:0;" allowfullscreen="" loading="lazy"
-                        referrerpolicy="no-referrer-when-downgrade"></iframe>
-                </td>
-            </tr>
-        </table>
-    </div>
+        <div class="footer">
+            <table>
+                <tr>
+                    <td class="ftitle">聯絡資訊</td>
+                    <td class="ftitle">學校地理位置</td>
+                </tr>
+                <tr>
+                    <td>
+                        <p>Tel:02-26585801轉2761(大學部)</p>
+                        <p>Tel: (02)-2658-5801轉2120-2125、2102-2103</p>
+                        <p>Fax: (02)8751-5018</p>
+                        <p>地址:台北市內湖區環山路一段56號</p>
+                    </td>
+                    <td>
+                        <iframe
+                            src="https://www.google.com/maps/embed?pb=!1m14!1m8!1m3!1d14453.80864966052!2d121.5654923!3d25.0865509!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3442ac6bd0b368c1%3A0xfa88e4f9afa56d76!2z5b635piO6LKh57aT56eR5oqA5aSn5a24!5e0!3m2!1szh-TW!2stw!4v1695189154495!5m2!1szh-TW!2stw"
+                            width="200" height="200" style="border:0;" allowfullscreen="" loading="lazy"
+                            referrerpolicy="no-referrer-when-downgrade"></iframe>
+                    </td>
+                </tr>
+            </table>
+        </div>
     </div>
 </body>
 

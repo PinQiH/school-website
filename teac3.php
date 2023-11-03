@@ -1,3 +1,8 @@
+<?php
+// 載入配置文件
+$link = require('config.php');
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 
@@ -27,7 +32,7 @@
     <script
         src="https: //cdnjs.cloudflare.com/ajax/libs/simplePagination.js/1.6/jquery.simplePagination.min.js"></script>
     <script src="./assets/js/nav.js"></script>
-    <title>兼任教師</title>
+    <title>退休教師</title>
 </head>
 
 <body>
@@ -112,9 +117,9 @@
                                 師資簡介
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink5">
-                                <a class="dropdown-item" href="teac.html">專任教師</a>
-                                <a class="dropdown-item" href="teac2.html">兼任教師</a>
-                                <a class="dropdown-item" href="teac3.html">退休教師</a>
+                                <a class="dropdown-item" href="teac.php">專任教師</a>
+                                <a class="dropdown-item" href="teac2.php">兼任教師</a>
+                                <a class="dropdown-item" href="teac3.php">退休教師</a>
                             </div>
                         </li>
                         <li class="nav-item dropdown">
@@ -166,34 +171,68 @@
             <ol>
                 <li class="a1"><a href="index.php">首頁</a></li>
                 <li class="a2"><a href="faculty.html">師資簡介</a></li>
-                <li class="a3"><a href="teac2.html">兼任教師</a></li>
+                <li class="a3"><a href="teac3.php">退休教師</a></li>
             </ol>
         </div>
 
         <div class="main">
-            <p>兼任教師</p>
-            <div class="content-wrapper">
-                <div class="content-container">
-                    <div class="phohograph-3">
-                        <img src="./assets/images/業承宇.png" alt="葉承宇" />
-                    </div>
+            <p>退休教師</p>
 
-                    <div class="bdtext">
-                        <!-- 文字内容1 -->
-                        <h1> 葉承宇</h1><br>
-                        <i class="material-icons" style="font-size:36px">account_box</i>
-                        <span> 兼任講師</span><br><br>
-                        <i class="material-icons" style="font-size:36px">school</i>
-                        <span> 國立台灣科技大學資訊管理所博士 </span><br><br>
-                        <i class="material-icons" style="font-size:36px">thumb_up</i>
-                        <span> 敏捷產品開發、軟體專案管理、軟體測試、軟體工程、軟體品質管理 </span><br><br>
-                        <i class="material-icons" style="font-size:36px">email</i>
-                        <a href="mailto:0004240@takming.edu.tw">
-                            <span> 0004240@takming.edu.tw</span><br><br>
-                        </a>
-                    </div>
-                </div>
-            </div>
+            <?php
+            $sql = "SELECT * FROM teachers WHERE type = '退休教師'";
+            $result = mysqli_query($link, $sql);
+
+            // 計數器，用於跟蹤每兩筆資料
+            $count = 0;
+
+            // 遍歷結果集，生成 HTML
+            while ($row = mysqli_fetch_assoc($result)) {
+                // 如果計數器為0，表示新的一組，則開始新的 content-wrapper
+                if ($count % 2 == 0) {
+                    echo '<div class="content-wrapper">';
+                }
+
+                echo '<div class="content-container">';
+                echo '<div class="phohograph-3">';
+                echo '<img src="' . $row['image_path'] . '" alt="' . $row['name'] . '" />';
+                echo '</div>';
+                echo '<div class="bdtext">';
+                echo '<h1>' . $row['name'] . '</h1><br>';
+                echo '<i class="material-icons" style="font-size:36px">account_box</i>';
+                echo '<span>'. $row['title'] . '</span><br><br>';
+                echo '<i class="material-icons" style="font-size:36px">school</i>';
+                echo '<span>'. $row['school'] . '</span><br><br>';
+                echo '<i class="material-icons" style="font-size:36px">thumb_up</i>';
+                echo '<span>' . $row['research_interests'] . '</span><br><br>';
+                echo '<i class="material-icons" style="font-size:36px">email</i>';
+                echo '<a href="mailto:' . $row['email'] . '">';
+                echo '<span>' . $row['email'] . '</span><br><br>';
+                echo '</a>';
+                echo '<i class="material-icons" style="font-size:36px">business_center</i>';
+                echo '<span>' . $row['office'] . '</span><br><br>';
+                echo '<i class="material-icons" style="font-size:36px">call</i>';
+                echo '<span>' . $row['phone'] . '</span><br><br>';
+                echo '<i class="material-icons" style="font-size:36px">public</i>';
+                echo '<a href="' . $row['website'] . '">';
+                echo '<span>' . $row['website'] . '</span>';
+                echo '</a>';
+                echo '</div>';
+                echo '</div>';
+
+                // 如果計數器為1，表示一組結束，則關閉 content-wrapper
+                if ($count % 2 == 1) {
+                    echo '</div>';
+                }
+
+                // 增加計數器
+                $count++;
+            }
+
+            // 如果最後一組僅有一筆資料，請關閉 content-wrapper
+            if ($count % 2 == 1) {
+                echo '</div>';
+            }
+            ?>
         </div>
 
         <div class="footer">
