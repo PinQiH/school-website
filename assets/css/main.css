@@ -665,14 +665,13 @@ table {
 .table {
     border-collapse: collapse;
     width: 100%;
-    max-width: 800px;
-    /* 根據需要設定最大寬度 */
     margin: 0 auto;
     /* 置中 */
     border-radius: 10px;
     /* 圓角 */
     overflow: hidden;
     text-align: left;
+    font-size: 20px;
 }
 
 .table th,

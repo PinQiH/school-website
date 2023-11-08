@@ -178,27 +178,33 @@ mysqli_set_charset($link, "utf8");
                 <img src="./assets/images/招生暗.jpg" class="d-block w-100 " alt="..." style="height: 450px"><br><br>
             </div>
 
-            <table class="table custom-table">
-                <thead>
-                    <tr>
-                        <th class="date">日期</th>
-                        <th class="title">標題</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <?php
-                    // 執行資料庫查詢
-                    $sql = "SELECT id, publish_date, title FROM `announcements` WHERE category = '招生資訊' ORDER BY publish_date DESC";
-                    $result = mysqli_query($link, $sql);
-                    $row_count = mysqli_num_rows($result);
+            <div class="content">
+                <div class="container">
+                    <div class="table-responsive">
+                        <table class="table custom-table">
+                            <thead>
+                                <tr>
+                                    <th class="date">日期</th>
+                                    <th class="title">標題</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <?php
+                                // 執行資料庫查詢
+                                $sql = "SELECT id, publish_date, title FROM `announcements` WHERE category = '招生資訊' ORDER BY publish_date DESC";
+                                $result = mysqli_query($link, $sql);
+                                $row_count = mysqli_num_rows($result);
 
-                    for ($i = 0; $i < $row_count; $i++) {
-                        $record = mysqli_fetch_row($result);
-                        echo "<tr onclick='window.location=\"announcements.php?announcement_id={$record[0]}\"'><td>" . $record[1] . "</td><td>" . $record[2] . "</td></tr>";
-                    }
-                    ?>
-                </tbody>
-            </table>
+                                for ($i = 0; $i < $row_count; $i++) {
+                                    $record = mysqli_fetch_row($result);
+                                    echo "<tr onclick='window.location=\"announcements.php?announcement_id={$record[0]}\"'><td>" . $record[1] . "</td><td>" . $record[2] . "</td></tr>";
+                                }
+                                ?>
+                            </tbody>
+                        </table>    
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="footer">
