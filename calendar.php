@@ -18,7 +18,6 @@ mysqli_set_charset($link, "utf8");
         integrity="sha384-GJzZqFGwb1QTTN6wy59ffF1BuGJpLSa9DkKMp0DgiMDm4iYMj70gZWKYbI706tWS" crossorigin="anonymous">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
     <link rel="stylesheet" href="./assets/css/main.css">
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
         integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
@@ -32,13 +31,9 @@ mysqli_set_charset($link, "utf8");
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/jquery@3.6.0/dist/jquery.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script
-        src="https: //cdnjs.cloudflare.com/ajax/libs/simplePagination.js/1.6/jquery.simplePagination.min.js"></script>
     <script src="./assets/js/nav.js"></script>
-    <title>專任教師</title>
+    <title>一般公告</title>
 </head>
-
 
 <body>
     <div class="wrap">
@@ -169,73 +164,41 @@ mysqli_set_charset($link, "utf8");
                 </ul>
             </div>
         </div>
-        
+
         <div class="href">
             <ol>
                 <li class="a1"><a href="index.php">首頁</a></li>
-                <li class="a2"><a href="faculty.html">師資簡介</a></li>
-                <li class="a3"><a href="teac.php">專任教師</a></li>
+                <li class="a2"><a href="other.html">其他資源</a></li>
+                <li class="a3"><a href="calendar.php">行事曆</a></li>
             </ol>
         </div>
 
         <div class="main">
-            <p>專任教師</p>
+            <div class="title">
+                <h2>行事曆</h2><br><br>
+            </div>
 
-            <?php
-            $sql = "SELECT * FROM teachers WHERE type = '專任教師'";
-            $result = mysqli_query($link, $sql);
+            <div class="content">
+                <div class="container">
+                    <div class="table-responsive">
+                        <table class="table custom-table">
+                            <tbody>
+                                <?php
+                                // 執行資料庫查詢
+                                $sql = "SELECT calendar_name, calendar_link FROM `calendars` ORDER BY updated_at DESC";
+                                $result = mysqli_query($link, $sql);
+                                $row_count = mysqli_num_rows($result);
 
-            // 計數器，用於跟蹤每兩筆資料
-            $count = 0;
-
-            // 遍歷結果集，生成 HTML
-            while ($row = mysqli_fetch_assoc($result)) {
-                // 如果計數器為0，表示新的一組，則開始新的 content-wrapper
-                if ($count % 2 == 0) {
-                    echo '<div class="content-wrapper">';
-                }
-
-                echo '<div class="content-container">';
-                echo '<div class="phohograph-3">';
-                echo '<img src="' . $row['image_path'] . '" alt="' . $row['name'] . '" />';
-                echo '</div>';
-                echo '<div class="bdtext">';
-                echo '<h1>' . $row['name'] . '</h1><br>';
-                echo '<i class="material-icons" style="font-size:36px">account_box</i>';
-                echo '<span>'. $row['title'] . '</span><br><br>';
-                echo '<i class="material-icons" style="font-size:36px">school</i>';
-                echo '<span>'. $row['school'] . '</span><br><br>';
-                echo '<i class="material-icons" style="font-size:36px">thumb_up</i>';
-                echo '<span>' . $row['research_interests'] . '</span><br><br>';
-                echo '<i class="material-icons" style="font-size:36px">email</i>';
-                echo '<a href="mailto:' . $row['email'] . '">';
-                echo '<span>' . $row['email'] . '</span><br><br>';
-                echo '</a>';
-                echo '<i class="material-icons" style="font-size:36px">business_center</i>';
-                echo '<span>' . $row['office'] . '</span><br><br>';
-                echo '<i class="material-icons" style="font-size:36px">call</i>';
-                echo '<span>' . $row['phone'] . '</span><br><br>';
-                echo '<i class="material-icons" style="font-size:36px">public</i>';
-                echo '<a href="' . $row['website'] . '">';
-                echo '<span>' . $row['website'] . '</span>';
-                echo '</a>';
-                echo '</div>';
-                echo '</div>';
-
-                // 如果計數器為1，表示一組結束，則關閉 content-wrapper
-                if ($count % 2 == 1) {
-                    echo '</div>';
-                }
-
-                // 增加計數器
-                $count++;
-            }
-
-            // 如果最後一組僅有一筆資料，請關閉 content-wrapper
-            if ($count % 2 == 1) {
-                echo '</div>';
-            }
-            ?>
+                                for ($i = 0; $i < $row_count; $i++) {
+                                    $record = mysqli_fetch_row($result);
+                                    echo "<tr onclick='window.location=\"$record[1]\"'><td>" . $record[0] . "</td></tr>";
+                                }
+                                ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
         </div>
 
         <div class="footer">

@@ -1,6 +1,10 @@
 <?php
+header("Content-Type:text/html; charset=utf-8");
+
 // 載入配置文件
 $link = require('config.php');
+
+mysqli_set_charset($link, "utf8");
 
 // 設定每頁最多顯示的資料數
 $items_per_page = 4;
@@ -10,7 +14,8 @@ $page = isset($_GET['page']) ? intval($_GET['page']) : 1;
 
 // 查詢總餐廳數
 $total_restaurants = mysqli_query($link, "SELECT COUNT(*) as total FROM restaurants");
-$total = mysqli_fetch_assoc($total_restaurants)['total'];
+$total_data = mysqli_fetch_assoc($total_restaurants);
+$total = $total_data['total'];
 
 // 計算總頁數
 $total_pages = ceil($total / $items_per_page);
@@ -137,8 +142,8 @@ $offset = ($page - 1) * $items_per_page;
                                 課程資訊
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink3">
-                                <a class="dropdown-item" href="#">課程規劃</a>
-                                <a class="dropdown-item" href="#">修業規定</a>
+                                <a class="dropdown-item" href="course_planning.html">課程規劃</a>
+                                <a class="dropdown-item" href="course_guidelines.html">修業規定</a>
                                 <a class="dropdown-item" href="map.html">課程地圖</a>
                                 <a class="dropdown-item" href="course-standards.html">課程基準表</a>
 
@@ -152,7 +157,7 @@ $offset = ($page - 1) * $items_per_page;
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink4">
                                 <div class="dropdown dropdown-submenu">
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item dropdown-toggle" href="#">大學部</a>
+                                        <a class="dropdown-item dropdown-toggle" href="un.html">大學部</a>
                                         <a class="dropdown-item" href="un1.html">甄選入學</a>
                                         <a class="dropdown-item" href="un2.html">聯合登記分發</a>
                                         <a class="dropdown-item" href="un3.html">繁星計畫</a>
@@ -163,7 +168,7 @@ $offset = ($page - 1) * $items_per_page;
                                         <a class="dropdown-item" href="un8.html">日四技單獨招生</a>
                                         <a class="dropdown-item" href="un9.html">備審資料準備指引(技優、申請、甄選)</a>
                                         <div class="dropdown-divider"></div>
-                                        <a class="dropdown-item dropdown-toggle" href="#">碩士班</a>
+                                        <a class="dropdown-item dropdown-toggle" href="gra.html">碩士班</a>
                                         <a class="dropdown-item" href="gra1.html">碩士班甄試招生</a>
                                         <a class="dropdown-item" href="gra2.html">碩士班考試暨碩士在職專班甄試招生</a>
                                     </div>
@@ -189,7 +194,6 @@ $offset = ($page - 1) * $items_per_page;
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink6">
                                 <a class="dropdown-item" href="loans.html">就學貸款</a>
                                 <a class="dropdown-item" href="scholarships.html">獎助學金</a>
-                                <a class="dropdown-item" href="#">學習成果</a>
                                 <a class="dropdown-item" href="graduation.html">畢業門檻</a>
                                 <a class="dropdown-item" href="certification.html">考證資訊</a>
                             </div>
@@ -211,9 +215,8 @@ $offset = ($page - 1) * $items_per_page;
                                 其他資源
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdownMenuLink8">
-                                <a class="dropdown-item" href="#">行事曆</a>
+                                <a class="dropdown-item" href="calendar.php">行事曆</a>
                                 <a class="dropdown-item" href="plan.html">校內平面圖</a>
-                                <a class="dropdown-item" href="#">地理資訊</a>
                                 <a class="dropdown-item" href="traffic.html">交通資訊</a>
 
                             </div>
