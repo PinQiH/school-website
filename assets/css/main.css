@@ -501,6 +501,11 @@ q:after {
     margin-top: 20px;
 }
 
+.content-container-5 {
+    flex: 1;
+    margin: 10px;
+}
+
 .bdtext {
     position: relative;
     text-align: left;
