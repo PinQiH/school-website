@@ -685,7 +685,7 @@ table {
     border: none;
     background-color: white;
     /* 單元格底色為白色 */
-    width: 33.33%;
+    width: 10%;
 }
 
 /* 表頭樣式 */
@@ -769,11 +769,11 @@ table {
 }
 
 #year {
-    width: 5%;
+    width: 3%;
 }
 
 #thing {
-    width: 95%;
+    width: 97%;
 }
 
 #text {
