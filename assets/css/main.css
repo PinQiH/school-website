@@ -310,7 +310,7 @@ q:after {
     height: 30px;
     margin-top: 30px;
     background-color: #baa6c9;
-
+    display: flex;
 }
 
 .href ol {
@@ -792,6 +792,7 @@ table {
     .wrap {
         width: 100%;
         /* 適應小螢幕 */
+        font-size: smaller;
     }
 
     .fontpage {
@@ -800,9 +801,11 @@ table {
         flex-direction: column;
         /* 垂直排列元素 */
         align-items: center;
+        font-size: smaller;
     }
 
     .fontpage a {
+        font-size: smaller;
         position: relative;
         /* 清除定位 */
         left: 0;
@@ -811,6 +814,7 @@ table {
 
     .fontpage h2,
     .fontpage h4 {
+        font-size: small;
         position: static;
         /* 清除定位 */
     }
@@ -869,5 +873,11 @@ table {
 
     .material-icons {
         margin-left: 0;
+    }
+}
+
+@media screen and (max-width: 1200px) {
+    .navbar-nav {
+        display: none;
     }
 }
